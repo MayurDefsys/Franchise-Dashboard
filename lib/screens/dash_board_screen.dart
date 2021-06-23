@@ -9,11 +9,20 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text("DashBoard"),
           centerTitle: true,
+          bottom: TabBar(
+            tabs: [
+              Text("Latest News"),
+              Text("Social Wall"),
+              Text("Connected Apps"),
+            ],
+          ),
           leading: Builder(
             builder: (context) => IconButton(
               icon: Icon(Icons.menu_rounded),
@@ -22,7 +31,7 @@ class _DashBoardState extends State<DashBoard> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 14.0),
               child: Icon(
                 Icons.notifications,
                 color: Colors.white,
@@ -31,6 +40,15 @@ class _DashBoardState extends State<DashBoard> {
             ),
           ],
         ),
-        drawer: CustomDrawer());
+        drawer: CustomDrawer(),
+        body: TabBarView(
+          children: [
+            Icon(Icons.directions_car),
+            Icon(Icons.directions_transit),
+            Icon(Icons.directions_bike),
+          ],
+        ),
+      ),
+    );
   }
 }

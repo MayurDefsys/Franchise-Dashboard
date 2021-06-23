@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/widgets/drawer/custom_sub_model.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -12,11 +13,29 @@ class CustomDrawer extends StatelessWidget {
           children: <Widget>[
             new Container(
               child: UserAccountsDrawerHeader(
-                accountName: const Text('Test Widget'),
-                accountEmail: const Text('test.widget@example.com'),
+                accountName: const Text(
+                  'User Name',
+                  style: TextStyle(
+                    fontSize: 16.0
+                  ),
+                ),
                 margin: EdgeInsets.all(0.0),
+                currentAccountPicture: Container(
+                  width: 50.0,
+                  height: 50.0,
+                  decoration: new BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: new NetworkImage(
+                        "https://picsum.photos/seed/picsum/200/300",
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              height: height * 0.2,
+              height: height * 0.25,
             ),
             new Expanded(
               child: new ListView(
@@ -29,12 +48,27 @@ class CustomDrawer extends StatelessWidget {
                     title: const Text('News'),
                     trailing: GestureDetector(
                       onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                                  title: Text('Dialog Title'),
-                                  content: Text('This is my content'),
-                                ));
+                        showGeneralDialog(
+                          barrierLabel: "Label",
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionDuration: Duration(milliseconds: 700),
+                          context: context,
+                          pageBuilder: (context, anim1, anim2) {
+                            return CustomSubModel(
+                              subModule1: "News",
+                              subModule2: "Category and Tag",
+                            );
+                          },
+                          transitionBuilder: (context, anim1, anim2, child) {
+                            return SlideTransition(
+                              position:
+                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
+                                      .animate(anim1),
+                              child: child,
+                            );
+                          },
+                        );
                       },
                       child: Icon(
                         Icons.arrow_drop_down,
@@ -47,12 +81,27 @@ class CustomDrawer extends StatelessWidget {
                     title: const Text('Identity'),
                     trailing: GestureDetector(
                       onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                                  title: Text('Dialog Title'),
-                                  content: Text('This is my content'),
-                                ));
+                        showGeneralDialog(
+                          barrierLabel: "Label",
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionDuration: Duration(milliseconds: 700),
+                          context: context,
+                          pageBuilder: (context, anim1, anim2) {
+                            return CustomSubModel(
+                              subModule1: "Users",
+                              subModule2: "User Groups",
+                            );
+                          },
+                          transitionBuilder: (context, anim1, anim2, child) {
+                            return SlideTransition(
+                              position:
+                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
+                                      .animate(anim1),
+                              child: child,
+                            );
+                          },
+                        );
                       },
                       child: Icon(
                         Icons.arrow_drop_down,
@@ -77,12 +126,27 @@ class CustomDrawer extends StatelessWidget {
                     title: const Text('Admin'),
                     trailing: GestureDetector(
                       onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                                  title: Text('Dialog Title'),
-                                  content: Text('This is my content'),
-                                ));
+                        showGeneralDialog(
+                          barrierLabel: "Label",
+                          barrierDismissible: true,
+                          barrierColor: Colors.black.withOpacity(0.5),
+                          transitionDuration: Duration(milliseconds: 700),
+                          context: context,
+                          pageBuilder: (context, anim1, anim2) {
+                            return CustomSubModel(
+                              subModule1: "System Log",
+                              subModule2: "Account Settings",
+                            );
+                          },
+                          transitionBuilder: (context, anim1, anim2, child) {
+                            return SlideTransition(
+                              position:
+                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
+                                      .animate(anim1),
+                              child: child,
+                            );
+                          },
+                        );
                       },
                       child: Icon(
                         Icons.arrow_drop_down,
