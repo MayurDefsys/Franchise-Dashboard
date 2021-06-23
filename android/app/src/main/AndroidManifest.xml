@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.franchise_dashboard">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="franchise_dashboard"
         android:icon="@mipmap/ic_launcher">
