@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class CustomSubModel extends StatefulWidget {
   final String subModule1;
   final String subModule2;
+  final Function onTapText1;
+  final Function onTapText2;
 
   const CustomSubModel({
     Key key,
     this.subModule1,
     this.subModule2,
+    this.onTapText1,
+    this.onTapText2,
   }) : super(key: key);
 
   _CustomSubModelState createState() => _CustomSubModelState();
@@ -39,7 +43,7 @@ class _CustomSubModelState extends State<CustomSubModel> {
                     width: 14.0,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: widget.onTapText1,
                     child: Text(
                       widget.subModule1,
                       style: TextStyle(
@@ -63,7 +67,7 @@ class _CustomSubModelState extends State<CustomSubModel> {
                     width: 14.0,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: widget.onTapText2,
                     child: Text(
                       widget.subModule2,
                       style: TextStyle(

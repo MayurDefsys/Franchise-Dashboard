@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/screens/login_screen.dart';
+import 'package:franchise_dashboard/screens/news/add_category_tag.dart';
+import 'package:franchise_dashboard/screens/news/news_blog_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_sub_model.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -15,9 +18,7 @@ class CustomDrawer extends StatelessWidget {
               child: UserAccountsDrawerHeader(
                 accountName: const Text(
                   'User Name',
-                  style: TextStyle(
-                    fontSize: 16.0
-                  ),
+                  style: TextStyle(fontSize: 16.0),
                 ),
                 margin: EdgeInsets.all(0.0),
                 currentAccountPicture: Container(
@@ -58,6 +59,21 @@ class CustomDrawer extends StatelessWidget {
                             return CustomSubModel(
                               subModule1: "News",
                               subModule2: "Category and Tag",
+                              onTapText1: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewsBlog()),
+                                );
+                              },
+                              onTapText2: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NewsCategoryAndTag()),
+                                );
+                              },
                             );
                           },
                           transitionBuilder: (context, anim1, anim2, child) {
