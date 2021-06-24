@@ -20,6 +20,8 @@ dev_dependencies:
 flutter:
   assets:
   - assets/images/login.png
+  - assets/images/bg_image.png
+  - assets/images/bg_login.png
 
   uses-material-design: true
 

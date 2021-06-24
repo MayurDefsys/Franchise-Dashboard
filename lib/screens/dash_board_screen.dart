@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/screens/news/latest_news_screen.dart';
+import 'package:franchise_dashboard/screens/social_wall/social_wall_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
 
 class DashBoard extends StatefulWidget {
@@ -14,18 +16,30 @@ class _DashBoardState extends State<DashBoard> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("DashBoard"),
+          backgroundColor: Colors.white,
+          title: Text(
+            "DashBoard",
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
           bottom: TabBar(
+            unselectedLabelColor: Colors.black,
+            labelColor: Colors.blue,
             tabs: [
-              Text("Latest News"),
-              Text("Social Wall"),
-              Text("Connected Apps"),
+              Text("Latest News",style: TextStyle(
+//                  color: Colors.blue
+              ),),
+              Text("Social Wall",style: TextStyle(
+//                  color: Colors.blue
+              ),),
+              Text("Connected Apps",style: TextStyle(
+//                  color: Colors.blue
+              ),),
             ],
           ),
           leading: Builder(
             builder: (context) => IconButton(
-              icon: Icon(Icons.menu_rounded),
+              icon: Icon(Icons.menu_rounded, color: Colors.blue),
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
@@ -34,7 +48,7 @@ class _DashBoardState extends State<DashBoard> {
               padding: const EdgeInsets.only(right: 14.0),
               child: Icon(
                 Icons.notifications,
-                color: Colors.white,
+                color: Colors.black,
                 size: 24.0,
               ),
             ),
@@ -43,9 +57,13 @@ class _DashBoardState extends State<DashBoard> {
         drawer: CustomDrawer(),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
+            LatestNews(),
+            SocialWall(),
+            Center(
+                child: Text(
+              "Connected Apps",
+              style: TextStyle(color: Colors.black),
+            )),
           ],
         ),
       ),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:franchise_dashboard/screens/login_screen.dart';
+import 'package:franchise_dashboard/screens/admin/account_setting_screen.dart';
+import 'package:franchise_dashboard/screens/identity/identity_users.dart';
+import 'package:franchise_dashboard/screens/identity/user_groups.dart';
+import 'package:franchise_dashboard/screens/login/login_screen.dart';
 import 'package:franchise_dashboard/screens/news/add_category_tag.dart';
 import 'package:franchise_dashboard/screens/news/news_blog_screen.dart';
+import 'package:franchise_dashboard/screens/admin/system_log_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_sub_model.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -45,85 +49,58 @@ class CustomDrawer extends StatelessWidget {
                   new ListTile(
                     title: new Text('Dashboard'),
                   ),
-                  new ListTile(
-                    title: const Text('News'),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showGeneralDialog(
-                          barrierLabel: "Label",
-                          barrierDismissible: true,
-                          barrierColor: Colors.black.withOpacity(0.5),
-                          transitionDuration: Duration(milliseconds: 700),
-                          context: context,
-                          pageBuilder: (context, anim1, anim2) {
-                            return CustomSubModel(
-                              subModule1: "News",
-                              subModule2: "Category and Tag",
-                              onTapText1: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NewsBlog()),
-                                );
-                              },
-                              onTapText2: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          NewsCategoryAndTag()),
-                                );
-                              },
+                  Theme(
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
+                    child: new ExpansionTile(
+                      title: const Text('News'),
+                      children: <Widget>[
+                        CustomSubModel(
+                          subModule1: "News",
+                          subModule2: "Category and Tag",
+                          onTapText1: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsBlog()),
                             );
                           },
-                          transitionBuilder: (context, anim1, anim2, child) {
-                            return SlideTransition(
-                              position:
-                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
-                                      .animate(anim1),
-                              child: child,
+                          onTapText2: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsCategoryAndTag()),
                             );
                           },
-                        );
-                      },
-                      child: Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                        size: 35.0,
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  new ListTile(
-                    title: const Text('Identity'),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showGeneralDialog(
-                          barrierLabel: "Label",
-                          barrierDismissible: true,
-                          barrierColor: Colors.black.withOpacity(0.5),
-                          transitionDuration: Duration(milliseconds: 700),
-                          context: context,
-                          pageBuilder: (context, anim1, anim2) {
-                            return CustomSubModel(
-                              subModule1: "Users",
-                              subModule2: "User Groups",
+                  Theme(
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
+                    child: new ExpansionTile(
+                      title: const Text('Identity'),
+                      children: <Widget>[
+                        CustomSubModel(
+                          subModule1: "Users",
+                          subModule2: "User Groups",
+                          onTapText1: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => IdentityUsers()),
                             );
                           },
-                          transitionBuilder: (context, anim1, anim2, child) {
-                            return SlideTransition(
-                              position:
-                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
-                                      .animate(anim1),
-                              child: child,
+                          onTapText2: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserGroups()),
                             );
                           },
-                        );
-                      },
-                      child: Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                        size: 35.0,
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   new ListTile(
@@ -138,37 +115,31 @@ class CustomDrawer extends StatelessWidget {
                   new ListTile(
                     title: const Text('Apps'),
                   ),
-                  new ListTile(
-                    title: const Text('Admin'),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showGeneralDialog(
-                          barrierLabel: "Label",
-                          barrierDismissible: true,
-                          barrierColor: Colors.black.withOpacity(0.5),
-                          transitionDuration: Duration(milliseconds: 700),
-                          context: context,
-                          pageBuilder: (context, anim1, anim2) {
-                            return CustomSubModel(
-                              subModule1: "System Log",
-                              subModule2: "Account Settings",
+                  Theme(
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
+                    child: new ExpansionTile(
+                      title: const Text('Admin'),
+                      children: <Widget>[
+                        CustomSubModel(
+                          subModule1: "System Log",
+                          subModule2: "Account Settings",
+                          onTapText1: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SystemLogScreen()),
                             );
                           },
-                          transitionBuilder: (context, anim1, anim2, child) {
-                            return SlideTransition(
-                              position:
-                                  Tween(begin: Offset(0, 1), end: Offset(0, 0))
-                                      .animate(anim1),
-                              child: child,
+                          onTapText2: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AccountSettings()),
                             );
                           },
-                        );
-                      },
-                      child: Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                        size: 35.0,
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

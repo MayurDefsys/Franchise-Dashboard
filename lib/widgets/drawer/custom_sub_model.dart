@@ -24,66 +24,58 @@ class _CustomSubModelState extends State<CustomSubModel> {
     double height = MediaQuery.of(context).size.height;
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        height: height * 0.2,
-        width: width * 0.7,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 3.0,
-                    backgroundColor: Colors.blueGrey,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 40.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 3.0,
+                  backgroundColor: Colors.blueGrey,
+                ),
+                SizedBox(
+                  width: 14.0,
+                ),
+                GestureDetector(
+                  onTap: widget.onTapText1,
+                  child: Text(
+                    widget.subModule1,
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16.0,
+                        decoration: TextDecoration.none),
                   ),
-                  SizedBox(
-                    width: 14.0,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 14.0,
+            ),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 3.0,
+                  backgroundColor: Colors.blueGrey,
+                ),
+                SizedBox(
+                  width: 14.0,
+                ),
+                GestureDetector(
+                  onTap: widget.onTapText2,
+                  child: Text(
+                    widget.subModule2,
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16.0,
+                        decoration: TextDecoration.none),
                   ),
-                  GestureDetector(
-                    onTap: widget.onTapText1,
-                    child: Text(
-                      widget.subModule1,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16.0,
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 3.0,
-                    backgroundColor: Colors.blueGrey,
-                  ),
-                  SizedBox(
-                    width: 14.0,
-                  ),
-                  GestureDetector(
-                    onTap: widget.onTapText2,
-                    child: Text(
-                      widget.subModule2,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 16.0,
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
