@@ -16,136 +16,139 @@ class CustomDrawer extends StatelessWidget {
     return Container(
       width: width * 0.8,
       child: Drawer(
-        child: new Column(
-          children: <Widget>[
-            new Container(
-              child: UserAccountsDrawerHeader(
-                accountName: const Text(
-                  'User Name',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-                margin: EdgeInsets.all(0.0),
-                currentAccountPicture: Container(
-                  width: 50.0,
-                  height: 50.0,
-                  decoration: new BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new NetworkImage(
-                        "https://picsum.photos/seed/picsum/200/300",
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 14.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    height: 25.0,
+                    width: 25.0,
+                    color: Color.fromRGBO(232, 232, 242, 10),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Center(
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 24.0,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              height: height * 0.25,
-            ),
-            new Expanded(
-              child: new ListView(
-                padding: const EdgeInsets.only(top: 8.0),
-                children: <Widget>[
-                  new ListTile(
-                    title: new Text('Dashboard'),
-                  ),
-                  Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: new ExpansionTile(
-                      title: const Text('News'),
-                      children: <Widget>[
-                        CustomSubModel(
-                          subModule1: "News",
-                          subModule2: "Category and Tag",
-                          onTapText1: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NewsBlog()),
-                            );
-                          },
-                          onTapText2: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NewsCategoryAndTag()),
-                            );
-                          },
-                        ),
-                      ],
+              new Expanded(
+                child: new ListView(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  children: <Widget>[
+                    new ListTile(
+                      title: new Text('Dashboard'),
                     ),
-                  ),
-                  Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: new ExpansionTile(
-                      title: const Text('Identity'),
-                      children: <Widget>[
-                        CustomSubModel(
-                          subModule1: "Users",
-                          subModule2: "User Groups",
-                          onTapText1: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => IdentityUsers()),
-                            );
-                          },
-                          onTapText2: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserGroups()),
-                            );
-                          },
-                        ),
-                      ],
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: new ExpansionTile(
+                        title: const Text('News'),
+                        children: <Widget>[
+                          CustomSubModel(
+                            subModule1: "News",
+                            subModule2: "Category and Tag",
+                            onTapText1: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewsBlog()),
+                              );
+                            },
+                            onTapText2: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NewsCategoryAndTag()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  new ListTile(
-                    title: const Text('Locatins & stores'),
-                  ),
-                  new ListTile(
-                    title: const Text('Documentation'),
-                  ),
-                  new ListTile(
-                    title: const Text('Reports'),
-                  ),
-                  new ListTile(
-                    title: const Text('Apps'),
-                  ),
-                  Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: new ExpansionTile(
-                      title: const Text('Admin'),
-                      children: <Widget>[
-                        CustomSubModel(
-                          subModule1: "System Log",
-                          subModule2: "Account Settings",
-                          onTapText1: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SystemLogScreen()),
-                            );
-                          },
-                          onTapText2: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AccountSettings()),
-                            );
-                          },
-                        ),
-                      ],
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: new ExpansionTile(
+                        title: const Text('Identity'),
+                        children: <Widget>[
+                          CustomSubModel(
+                            subModule1: "Users",
+                            subModule2: "User Groups",
+                            onTapText1: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => IdentityUsers()),
+                              );
+                            },
+                            onTapText2: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserGroups()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    new ListTile(
+                      title: const Text('Locatins & stores'),
+                    ),
+                    new ListTile(
+                      title: const Text('Documentation'),
+                    ),
+                    new ListTile(
+                      title: const Text('Reports'),
+                    ),
+                    new ListTile(
+                      title: const Text('Apps'),
+                    ),
+                    Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: new ExpansionTile(
+                        title: const Text('Admin'),
+                        children: <Widget>[
+                          CustomSubModel(
+                            subModule1: "System Log",
+                            subModule2: "Account Settings",
+                            onTapText1: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SystemLogScreen()),
+                              );
+                            },
+                            onTapText2: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AccountSettings()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
