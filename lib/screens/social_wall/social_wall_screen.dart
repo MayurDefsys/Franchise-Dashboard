@@ -21,6 +21,26 @@ class _SocialWallState extends State<SocialWall> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.only(top: 16.0,left: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "DashBoard",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                SizedBox(height: 8.0,),
+                Text(
+                  "Welcome to the Rashays Dashboard",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14.0
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 80.0),
             child: Container(
               height: height * 1,

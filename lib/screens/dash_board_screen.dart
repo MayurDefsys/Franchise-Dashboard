@@ -27,15 +27,24 @@ class _DashBoardState extends State<DashBoard> {
             unselectedLabelColor: Colors.black,
             labelColor: Colors.blue,
             tabs: [
-              Text("Latest News",style: TextStyle(
+              Text(
+                "Latest News",
+                style: TextStyle(
 //                  color: Colors.blue
-              ),),
-              Text("Social Wall",style: TextStyle(
+                    ),
+              ),
+              Text(
+                "Social Wall",
+                style: TextStyle(
 //                  color: Colors.blue
-              ),),
-              Text("Connected Apps",style: TextStyle(
+                    ),
+              ),
+              Text(
+                "Connected Apps",
+                style: TextStyle(
 //                  color: Colors.blue
-              ),),
+                    ),
+              ),
             ],
           ),
           leading: Builder(
@@ -46,11 +55,23 @@ class _DashBoardState extends State<DashBoard> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 14.0),
-              child: Icon(
-                Icons.notifications,
-                color: Colors.black,
-                size: 24.0,
+              padding: const EdgeInsets.only(right: 22.0),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.notifications,
+                    color: Colors.black,
+                    size: 24.0,
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Icon(
+                    Icons.more_vert,
+                    color: Colors.black,
+                    size: 24.0,
+                  ),
+                ],
               ),
             ),
           ],
