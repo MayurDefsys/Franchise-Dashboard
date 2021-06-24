@@ -33,7 +33,7 @@ class _SocialWallState extends State<SocialWall> {
                 itemBuilder: (BuildContext context, index) {
                   return Container(
                     height: height * 0.23,
-                    margin: EdgeInsets.all(10.0),
+                    margin: EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),

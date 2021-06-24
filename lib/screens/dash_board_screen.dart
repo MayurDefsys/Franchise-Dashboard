@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/screens/connected_apps/connected_apps_screen.dart';
 import 'package:franchise_dashboard/screens/news/latest_news_screen.dart';
 import 'package:franchise_dashboard/screens/social_wall/social_wall_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
@@ -59,11 +60,7 @@ class _DashBoardState extends State<DashBoard> {
           children: [
             LatestNews(),
             SocialWall(),
-            Center(
-                child: Text(
-              "Connected Apps",
-              style: TextStyle(color: Colors.black),
-            )),
+            ConnectedApps(),
           ],
         ),
       ),
