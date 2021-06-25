@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/screens/admin/account_setting_screen.dart';
+import 'package:franchise_dashboard/screens/admin/system_log_screen.dart';
 import 'package:franchise_dashboard/screens/identity/identity_users.dart';
 import 'package:franchise_dashboard/screens/identity/user_groups.dart';
-import 'package:franchise_dashboard/screens/login/login_screen.dart';
 import 'package:franchise_dashboard/screens/news/add_category_tag.dart';
 import 'package:franchise_dashboard/screens/news/news_blog_screen.dart';
-import 'package:franchise_dashboard/screens/admin/system_log_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_sub_model.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -106,7 +105,7 @@ class CustomDrawer extends StatelessWidget {
                       ),
                     ),
                     new ListTile(
-                      title: const Text('Locatins & stores'),
+                      title: const Text('Locations & stores'),
                     ),
                     new ListTile(
                       title: const Text('Documentation'),
