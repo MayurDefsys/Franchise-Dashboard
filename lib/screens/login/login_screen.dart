@@ -1,5 +1,47 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/error/error_handling.dart';
+import 'package:franchise_dashboard/model/login/login_model.dart';
 import 'package:franchise_dashboard/screens/dash_board_screen.dart';
+import 'package:http/http.dart' as http;
+
+Future<LoginModel> createAlbum(
+    String emailAddress, String password, bool isSuperAdmin) async {
+  var responseJson;
+  final response = await http.post(
+    Uri.parse(
+        'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'emailAddress': emailAddress,
+      'password': password,
+      'isSuperAdmin': isSuperAdmin,
+    }),
+  );
+  print("response ${response.statusCode}");
+  print("bodyyyyy ${response.body}");
+  responseJson = _response(response);
+}
+
+dynamic _response(http.Response response) {
+  switch (response.statusCode) {
+    case 200:
+      var responseJson = json.decode(response.body.toString());
+      return responseJson;
+    case 400:
+      throw BadRequestException(response.body.toString());
+    case 401:
+    case 403:
+      throw UnauthorisedException(response.body.toString());
+    case 500:
+    default:
+      throw FetchDataException(
+          'Error occured while Communication with Server with StatusCode: ${response.statusCode}');
+  }
+}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,6 +51,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  Future<LoginModel> _futureAlbum;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -119,8 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
           return 'Please Enter Password';
         } else if (value.length < 3) {
           return 'Password must be more than 2 charater';
-        } else if (value.length > 8) {
-          return 'Password must be less than 8 charater';
+        } else if (value.length > 16) {
+          return 'Password must be less than 16 charater';
         }
         return null;
       },
@@ -189,14 +232,22 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () async {
-//        if (_formKey.currentState.validate()) {
-//          ScaffoldMessenger.of(context)
-//              .showSnackBar(SnackBar(content: Text('Processing')));
-//        } else if (!_formKey.currentState.validate()) {
-//          return "Please Enter Details";
-//        } else {
-//          return null;
-//        }
+        setState(() {
+          createAlbum(
+            emailController.text,
+            passwordController.text,
+            false,
+          );
+        });
+        if (_formKey.currentState.validate()) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Processing')));
+        } else if (!_formKey.currentState.validate()) {
+          return "Please Enter Details";
+        } else {
+          return null;
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DashBoard()),
@@ -219,6 +270,21 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         )),
       ),
+    );
+  }
+
+  FutureBuilder<LoginModel> buildFutureBuilder() {
+    return FutureBuilder<LoginModel>(
+      future: _futureAlbum,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data.emailAddress);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        return CircularProgressIndicator();
+      },
     );
   }
 }
