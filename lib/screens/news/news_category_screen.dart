@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:franchise_dashboard/screens/login/login_screen.dart';
+import 'package:franchise_dashboard/screens/news/edit_news_category_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
 
 class NewsCategory extends StatefulWidget {
@@ -60,6 +63,68 @@ class _NewsCategoryState extends State<NewsCategory> {
               fit: BoxFit.cover,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, right: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Back',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  width: 8.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditNewsCategory()),
+                            );
+                  },
+                  child: Container(
+                    height: 35.0,
+                    width: 70.0,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(253, 57, 122, 10),
+                      borderRadius: BorderRadius.circular(6.0)
+                    ),
+                    child: Center(
+                        child: Text(
+                      "Edit",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )),
+                  ),
+                )
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => EditNewsCategory()),
+                //     );
+                //   },
+                //   child: Text('Edit',
+                //     style: TextStyle(
+                //         color: Colors.white
+                //     ),),
+                //   style: ButtonStyle(
+                //     backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(253, 57, 122, 10)),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
           SingleChildScrollView(
             child: Column(
               children: [
@@ -78,7 +143,8 @@ class _NewsCategoryState extends State<NewsCategory> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 30.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Column(
