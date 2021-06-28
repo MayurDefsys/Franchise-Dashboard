@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/screens/news/news_category_screen.dart';
 
 class LatestNews extends StatefulWidget {
   @override
@@ -76,43 +77,51 @@ class _LatestNewsState extends State<LatestNews> {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Add extra kick to your meal- Introducing new Tabasco® sauce range! ",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(89, 93, 110, 10)),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Text(
-                                      "Rashays Admin",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              100, 108, 154, 10)),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Text(
-                                      " 15-09-2020",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              100, 108, 154, 10)),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Text(
-                                      "Rashays Wagyu comes from the Darling Downs, QLD. It has been grain-fed for 450 Days,  of sauce.",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(
-                                              116, 120, 141, 10)),
-                                    ),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => NewsCategory()),
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Add extra kick to your meal- Introducing new Tabasco® sauce range! ",
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(89, 93, 110, 10)),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        "Rashays Admin",
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(
+                                                100, 108, 154, 10)),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        " 15-09-2020",
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(
+                                                100, 108, 154, 10)),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        "Rashays Wagyu comes from the Darling Downs, QLD. It has been grain-fed for 450 Days,  of sauce.",
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(
+                                                116, 120, 141, 10)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

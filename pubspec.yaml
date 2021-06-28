@@ -22,6 +22,7 @@ flutter:
   - assets/images/login.png
   - assets/images/bg_image.png
   - assets/images/bg_login.png
+  - assets/images/news.png
 
   uses-material-design: true
 
