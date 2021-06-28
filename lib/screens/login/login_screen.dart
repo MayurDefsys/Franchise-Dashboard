@@ -6,7 +6,7 @@ import 'package:franchise_dashboard/model/login/login_model.dart';
 import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
 
-Future<LoginModel> createAlbum(
+Future<LoginModel> login(
     String emailAddress, String password, bool isSuperAdmin) async {
   var responseJson;
   final response = await http.post(
@@ -233,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () async {
         setState(() {
-          createAlbum(
+          login(
             emailController.text,
             passwordController.text,
             false,
@@ -270,21 +270,6 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         )),
       ),
-    );
-  }
-
-  FutureBuilder<LoginModel> buildFutureBuilder() {
-    return FutureBuilder<LoginModel>(
-      future: _futureAlbum,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data.emailAddress);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return CircularProgressIndicator();
-      },
     );
   }
 }
