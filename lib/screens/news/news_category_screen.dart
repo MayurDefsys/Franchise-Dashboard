@@ -54,7 +54,7 @@ class _NewsCategoryState extends State<NewsCategory> {
         ],
       ),
       drawer: CustomDrawer(),
-      body: Stack(
+      body: Column(
         children: [
           Container(
             height: height * 0.4,

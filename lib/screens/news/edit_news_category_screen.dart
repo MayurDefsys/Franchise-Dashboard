@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/screens/news/news_article_tab.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
 
 class EditNewsCategory extends StatefulWidget {
@@ -147,6 +148,41 @@ class _EditNewsCategoryState extends State<EditNewsCategory>
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0)),
                 margin: EdgeInsets.all(12.0),
+                child: DefaultTabController(
+                    length: 2, // length of tabs
+                    initialIndex: 0,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            child: TabBar(
+                              labelColor: Colors.green,
+                              unselectedLabelColor: Colors.black,
+                              tabs: [
+                                Tab(text: 'Tab 1'),
+                                Tab(text: 'Tab 2'),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                                width: 120.0,
+                                height: height * 1,
+                                // padding: EdgeInsets.only(top: 100.0),
+                                child: TabBarView(
+                                    children: <Widget>[
+                                 NewsArticleTab(),
+                                  Container(
+                                    child: Center(
+                                      child: Text('Display Tab 2',
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ),
+                                ])),
+                          )
+                        ])),
               ),
             ),
           ],

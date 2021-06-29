@@ -83,7 +83,7 @@ class _DashBoardState extends State<DashBoard> {
             ),
           ],
         ),
-        drawer: CustomDrawer(),
+          drawer: CustomDrawer(),
         body: TabBarView(
           children: [
             LatestNews(),
