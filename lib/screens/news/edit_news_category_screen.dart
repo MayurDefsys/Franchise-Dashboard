@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/screens/news/news_article_tab.dart';
+import 'package:franchise_dashboard/screens/news/read_history_tab.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
 
 class EditNewsCategory extends StatefulWidget {
@@ -156,11 +157,11 @@ class _EditNewsCategoryState extends State<EditNewsCategory>
                         children: <Widget>[
                           Container(
                             child: TabBar(
-                              labelColor: Colors.green,
-                              unselectedLabelColor: Colors.black,
+                              labelColor: Colors.black,
+                              unselectedLabelColor: Colors.grey,
                               tabs: [
-                                Tab(text: 'Tab 1'),
-                                Tab(text: 'Tab 2'),
+                                Tab(text: 'News Article'),
+                                Tab(text: 'Read History'),
                               ],
                             ),
                           ),
@@ -169,17 +170,9 @@ class _EditNewsCategoryState extends State<EditNewsCategory>
                                 width: 120.0,
                                 height: height * 1,
                                 // padding: EdgeInsets.only(top: 100.0),
-                                child: TabBarView(
-                                    children: <Widget>[
-                                 NewsArticleTab(),
-                                  Container(
-                                    child: Center(
-                                      child: Text('Display Tab 2',
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
+                                child: TabBarView(children: <Widget>[
+                                  NewsArticleTab(),
+                                  ReadHistoryTab(),
                                 ])),
                           )
                         ])),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/error/error_handling.dart';
+import 'package:franchise_dashboard/model/login/auth_reponse_model.dart';
 import 'package:franchise_dashboard/model/login/login_model.dart';
 import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
@@ -10,9 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<LoginModel> login(
     String emailAddress, String password, bool isSuperAdmin) async {
-  var responseJson;
-  String token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJiODYwOWE0YS1iZGIzLTRiMDUtOTE0Zi05ZmI0ZjlhMDUyYTAiLCJJbnN0YW5jZUlkIjoiMjQiLCJQZXJtaXNzaW9ucyI6IlVzZXIuV3JpdGV8VXNlci5SZWFkfFN0b3JlLldyaXRlfFN0b3JlLlJlYWR8TmV3cy5Xcml0ZXxOZXdzLlJlYWR8VXNlckdyb3VwLldyaXRlfFVzZXJHcm91cC5SZWFkfEludGVncmF0aW9uLldyaXRlfEludGVncmF0aW9uLlJlYWR8SW5zdGFuY2UuV3JpdGV8SW5zdGFuY2UuUmVhZHxEb2N1bWVudC5Xcml0ZXxEb2N1bWVudC5SZWFkfERvY3VtZW50VHlwZS5Xcml0ZXxEb2N1bWVudFR5cGUuUmVhZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ik1hc3RlckFkbWluIiwiZXhwIjoxNjI1MDQxODQ3LCJpc3MiOiJGcmFuY2hpc2VEYXNoYm9hcmQiLCJhdWQiOiJGcmFuY2hpc2VEYXNoYm9hcmQifQ.-zkqhUZeFPl8FJWKjZ1prH2ZU_drQZAcwQ5UwOXmcUY";
+  var token;
   final response = await http.post(
     Uri.parse(
         'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
@@ -26,12 +25,13 @@ Future<LoginModel> login(
       'isSuperAdmin': isSuperAdmin,
     }),
   );
-  print("token ${token}");
   print("response ${response.statusCode}");
   print("bodyyyyy ${response.body}");
-  responseJson = _response(response);
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // prefs. setString("token", responseJson['token']);
+  var responseJson = _response(response);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString("token", responseJson['data']['token']);
+  String userToken = prefs.getString("token");
+  print("ldlmmdmd $userToken");
 }
 
 dynamic _response(http.Response response) {
@@ -247,6 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
             false,
           );
         });
+        print("fdknfdnfj ");
         if (_formKey.currentState.validate()) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Processing')));

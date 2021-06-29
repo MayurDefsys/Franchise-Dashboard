@@ -7,6 +7,8 @@ class NewsArticleTab extends StatefulWidget {
 
 class _NewsArticleTabState extends State<NewsArticleTab> {
   int _value1 = 1;
+  bool isSwitchedStatus = false;
+  bool isSwitched = false;
   TextEditingController emailController = TextEditingController();
 
   @override
@@ -117,7 +119,7 @@ class _NewsArticleTabState extends State<NewsArticleTab> {
                 controller: emailController,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  hintText: "Tags",
+                  hintText: "Summary",
                   hintStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
@@ -130,6 +132,65 @@ class _NewsArticleTabState extends State<NewsArticleTab> {
                         bottomRight: Radius.circular(0.0)),
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Switch(
+                    value: isSwitchedStatus,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitchedStatus = value;
+                        print(isSwitchedStatus);
+                      });
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                  Text("Status"),
+                  SizedBox(
+                    width: 24.0,
+                  ),
+                  Switch(
+                    value: isSwitched,
+                    onChanged: (value) {
+                      setState(() {
+                        isSwitched = value;
+                        print(isSwitched);
+                      });
+                    },
+                    activeTrackColor: Colors.lightGreenAccent,
+                    activeColor: Colors.green,
+                  ),
+                  Text("Required Reading")
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Save Blog',
+                      style: TextStyle(color: Color.fromRGBO(54, 108, 243, 10)),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(color: Color.fromRGBO(253, 57, 122, 10)),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

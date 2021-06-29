@@ -16,11 +16,12 @@ class _LatestNewsState extends State<LatestNews> {
   Future<List<NewsModel>> fetchAlbum() async {
     final response = await http.get(Uri.parse(
         'https://franchisedashboard.azurewebsites.net/API/V1/News/LatestNews'));
-
+    print("responseList $response");
+    print("statusCodeList ${response.statusCode}");
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       var rest = data["data"] as List;
-      print(rest);
+      print("rest$rest");
       list = rest.map<NewsModel>((json) => NewsModel.fromJson(json)).toList();
       return list;
     } else {
@@ -109,7 +110,8 @@ class _LatestNewsState extends State<LatestNews> {
                           borderRadius: BorderRadius.circular(5.0),
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage("https://picsum.photos/250?image=9"),
+                            image: NetworkImage(
+                                "https://picsum.photos/250?image=9"),
                           ),
                         ),
                       ),
