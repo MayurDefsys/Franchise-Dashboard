@@ -9,8 +9,8 @@ import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<LoginModel> login(
-    String emailAddress, String password, bool isSuperAdmin) async {
+Future<LoginModel> login(String emailAddress, String password,
+    bool isSuperAdmin, BuildContext context) async {
   var token;
   final response = await http.post(
     Uri.parse(
@@ -27,29 +27,48 @@ Future<LoginModel> login(
   );
   print("response ${response.statusCode}");
   print("bodyyyyy ${response.body}");
-  var responseJson = _response(response);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString("token", responseJson['data']['token']);
-  String userToken = prefs.getString("token");
-  print("ldlmmdmd $userToken");
-}
+  var responseJson = null;
 
-dynamic _response(http.Response response) {
-  switch (response.statusCode) {
-    case 200:
-      var responseJson = json.decode(response.body.toString());
-      return responseJson;
-    case 400:
-      throw BadRequestException(response.body.toString());
-    case 401:
-    case 403:
-      throw UnauthorisedException(response.body.toString());
-    case 500:
-    default:
-      throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode: ${response.statusCode}');
+  if (response.statusCode == 200) {
+    responseJson = json.decode(response.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", responseJson['data']['token']);
+
+    print("Latest Token ${responseJson['data']['token']}");
+    if (responseJson['data']['token'] != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DashBoard()),
+      );
+    }
+  } else {
+    throw Exception('Failed to create album.');
   }
 }
+
+//dynamic _response(http.Response response, context) {
+//  switch (response.statusCode) {
+//    case 200:
+//      var responseJson = LoginModel.fromJson(jsonDecode(response.body));
+//      print("Latest TOken $responseJson['data']['token']");
+//      if (responseJson['data']['token'] != null) {
+//        Navigator.push(
+//          context,
+//          MaterialPageRoute(builder: (context) => DashBoard()),
+//        );
+//      }
+//      return responseJson;
+//    case 400:
+//      throw BadRequestException(response.body.toString());
+//    case 401:
+//    case 403:
+//      throw UnauthorisedException(response.body.toString());
+//    case 500:
+//    default:
+//      throw FetchDataException(
+//          'Error occured while Communication with Server with StatusCode: ${response.statusCode}');
+//  }
+//}
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -241,11 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () async {
         setState(() {
-          login(
-            emailController.text,
-            passwordController.text,
-            false,
-          );
+          login(emailController.text, passwordController.text, false, context);
         });
         print("fdknfdnfj ");
         if (_formKey.currentState.validate()) {
@@ -257,10 +272,10 @@ class _LoginScreenState extends State<LoginScreen> {
           return null;
         }
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DashBoard()),
-        );
+//        Navigator.push(
+//          context,
+//          MaterialPageRoute(builder: (context) => DashBoard()),
+//        );
       },
       child: Container(
         width: width * 0.25,
