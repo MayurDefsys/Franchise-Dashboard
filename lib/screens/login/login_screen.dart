@@ -27,10 +27,9 @@ Future<LoginModel> login(String emailAddress, String password,
   );
   print("response ${response.statusCode}");
   print("bodyyyyy ${response.body}");
-  var responseJson = null;
 
   if (response.statusCode == 200) {
-    responseJson = json.decode(response.body);
+    var responseJson = json.decode(response.body);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", responseJson['data']['token']);
 
