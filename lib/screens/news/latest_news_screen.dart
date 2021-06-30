@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/model/news/news_model.dart';
 import 'package:franchise_dashboard/screens/news/news_category_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LatestNews extends StatefulWidget {
   @override
@@ -14,12 +15,26 @@ class _LatestNewsState extends State<LatestNews> {
   List<NewsModel> list;
 
   Future<List<NewsModel>> fetchAlbum() async {
-    final response = await http.get(Uri.parse(
-        'https://franchisedashboard.azurewebsites.net/API/V1/News/LatestNews'));
-    print("responseList $response");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString("token");
+    print("dfkndnfnnfngnfn $token");
+
+    final response = await http.get(
+      Uri.parse(
+          'https://franchisedashboard.azurewebsites.net/API/V1/News/LatestNews'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer$token',
+      },
+    );
+
+    print("responseListToken $token");
+    print("responseListData ${response.body}");
     print("statusCodeList ${response.statusCode}");
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
+      print("dataaaa $data");
       var rest = data["data"] as List;
       print("rest$rest");
       list = rest.map<NewsModel>((json) => NewsModel.fromJson(json)).toList();
@@ -63,26 +78,26 @@ class _LatestNewsState extends State<LatestNews> {
               ],
             ),
           ),
-          listDetailsWidget(),
-          // FutureBuilder<List<NewsModel>>(
-          //   future: fetchAlbum(),
-          //   builder: (context, snapShot) {
-          //     if (snapShot.hasData) {
-          //       return listDetailsWidget(snapShot.data);
-          //     } else if (snapShot.hasError) {
-          //       return Center(child: Text("Error"));
-          //     }
-          //     return Center(child: CircularProgressIndicator());
-          //   },
-          // ),
+//          listDetailsWidget(),
+          FutureBuilder<List<NewsModel>>(
+            future: fetchAlbum(),
+            builder: (context, snapShot) {
+              if (snapShot.hasData) {
+                print("SnapshotData ${snapShot.hasData}");
+                return listDetailsWidget(snapShot.data);
+              } else if (snapShot.hasError) {
+                print("SnapshotError ${snapShot.hasError}");
+                return Center(child: Text("Error"));
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget listDetailsWidget(
-      // List<NewsModel> item
-      ) {
+  Widget listDetailsWidget(List<NewsModel> item) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
@@ -93,7 +108,7 @@ class _LatestNewsState extends State<LatestNews> {
             color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.all(12.0),
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: item.length,
           itemBuilder: (BuildContext context, index) {
             return Expanded(
               child: Column(
@@ -130,7 +145,7 @@ class _LatestNewsState extends State<LatestNews> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Add extra kick to your meal- Introducing new Tabasco® sauce range! ",
+                                  item[index].title ?? "Title",
                                   style: TextStyle(
                                       color: Color.fromRGBO(89, 93, 110, 10)),
                                 ),
@@ -138,7 +153,7 @@ class _LatestNewsState extends State<LatestNews> {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  "Rashays Admin",
+                                  item[index].author ?? "Author",
                                   style: TextStyle(
                                       color: Color.fromRGBO(100, 108, 154, 10)),
                                 ),
@@ -146,7 +161,7 @@ class _LatestNewsState extends State<LatestNews> {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  " 15-09-2020",
+                                  item[index].date ?? "Date",
                                   style: TextStyle(
                                       color: Color.fromRGBO(100, 108, 154, 10)),
                                 ),
@@ -154,7 +169,7 @@ class _LatestNewsState extends State<LatestNews> {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  "Rashays Wagyu comes from the Darling Downs, QLD. It has been grain-fed for 450 Days,  of sauce.",
+                                  item[index].description ?? "description",
                                   style: TextStyle(
                                       color: Color.fromRGBO(116, 120, 141, 10)),
                                 ),

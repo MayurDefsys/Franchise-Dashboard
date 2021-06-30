@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:franchise_dashboard/error/error_handling.dart';
-import 'package:franchise_dashboard/model/login/auth_reponse_model.dart';
 import 'package:franchise_dashboard/model/login/login_model.dart';
 import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
@@ -11,13 +8,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<LoginModel> login(String emailAddress, String password,
     bool isSuperAdmin, BuildContext context) async {
-  var token;
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String tokenLogin = prefs.getString("token");
+  print("Before $tokenLogin");
+
   final response = await http.post(
     Uri.parse(
         'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      HttpHeaders.authorizationHeader: 'Bearer$token',
+      "Authorization": 'Bearer$tokenLogin',
     },
     body: jsonEncode(<String, dynamic>{
       'emailAddress': emailAddress,
@@ -27,10 +27,11 @@ Future<LoginModel> login(String emailAddress, String password,
   );
   print("response ${response.statusCode}");
   print("bodyyyyy ${response.body}");
+  print("setToken $tokenLogin");
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.setString("token", responseJson['data']['token']);
 
     print("Latest Token ${responseJson['data']['token']}");
@@ -261,7 +262,6 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           login(emailController.text, passwordController.text, false, context);
         });
-        print("fdknfdnfj ");
         if (_formKey.currentState.validate()) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Processing')));
