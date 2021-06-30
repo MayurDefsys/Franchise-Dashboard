@@ -78,26 +78,27 @@ class _LatestNewsState extends State<LatestNews> {
               ],
             ),
           ),
-//          listDetailsWidget(),
-          FutureBuilder<List<NewsModel>>(
-            future: fetchAlbum(),
-            builder: (context, snapShot) {
-              if (snapShot.hasData) {
-                print("SnapshotData ${snapShot.hasData}");
-                return listDetailsWidget(snapShot.data);
-              } else if (snapShot.hasError) {
-                print("SnapshotError ${snapShot.hasError}");
-                return Center(child: Text("Error"));
-              }
-              return Center(child: CircularProgressIndicator());
-            },
-          ),
+          listDetailsWidget(),
+//          FutureBuilder<List<NewsModel>>(
+//            future: fetchAlbum(),
+//            builder: (context, snapShot) {
+//              if (snapShot.hasData) {
+//                print("SnapshotData ${snapShot.hasData}");
+//                return listDetailsWidget(snapShot.data);
+//              } else if (snapShot.hasError) {
+//                print("SnapshotError ${snapShot.hasError}");
+//                return Center(child: Text("Error"));
+//              }
+//              return Center(child: CircularProgressIndicator());
+//            },
+//          ),
         ],
       ),
     );
   }
 
-  Widget listDetailsWidget(List<NewsModel> item) {
+  Widget listDetailsWidget(//      List<NewsModel> item
+      ) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
@@ -108,77 +109,70 @@ class _LatestNewsState extends State<LatestNews> {
             color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.all(12.0),
         child: ListView.builder(
-          itemCount: item.length,
+          itemCount: 6,
           itemBuilder: (BuildContext context, index) {
-            return Expanded(
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewsCategory()),
+                );
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: width * 0.42,
-                        height: height * 0.2,
-                        margin: EdgeInsets.all(10.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://picsum.photos/250?image=9"),
-                          ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      width: width * 1,
+                      height: height * 0.2,
+                      margin: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image:
+                              NetworkImage("https://picsum.photos/250?image=9"),
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewsCategory()),
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item[index].title ?? "Title",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(89, 93, 110, 10)),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  item[index].author ?? "Author",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(100, 108, 154, 10)),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  item[index].date ?? "Date",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(100, 108, 154, 10)),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  item[index].description ?? "description",
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(116, 120, 141, 10)),
-                                ),
-                              ],
-                            ),
-                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 34.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "News Category ",
+                          style:
+                              TextStyle(color: Color.fromRGBO(89, 93, 110, 10)),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          " Rashays Admin",
+                          style: TextStyle(
+                              color: Color.fromRGBO(100, 108, 154, 10)),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          "05-02-2021",
+                          style: TextStyle(
+                              color: Color.fromRGBO(100, 108, 154, 10)),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          "If you’re looking to add a flavour twist to your already delicious RASHAYS meals, we have NEW Tabasco® sauces available on every table at our restaurants located across Sydney, ACT, Wollongong and the Central Coast!",
+                          style: TextStyle(
+                              color: Color.fromRGBO(116, 120, 141, 10)),
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(
                     color: Colors.red,

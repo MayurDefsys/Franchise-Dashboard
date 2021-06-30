@@ -36,10 +36,10 @@ Future<LoginModel> login(String emailAddress, String password,
 
     print("Latest Token ${responseJson['data']['token']}");
     if (responseJson['data']['token'] != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DashBoard()),
-      );
+//      Navigator.push(
+//        context,
+//        MaterialPageRoute(builder: (context) => DashBoard()),
+//      );
     }
   } else {
     throw Exception('Failed to create album.');
@@ -259,22 +259,22 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () async {
-        setState(() {
-          login(emailController.text, passwordController.text, false, context);
-        });
-        if (_formKey.currentState.validate()) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Processing')));
-        } else if (!_formKey.currentState.validate()) {
-          return "Please Enter Details";
-        } else {
-          return null;
-        }
+//        setState(() {
+//          login(emailController.text, passwordController.text, false, context);
+//        });
+//        if (_formKey.currentState.validate()) {
+//          ScaffoldMessenger.of(context)
+//              .showSnackBar(SnackBar(content: Text('Processing')));
+//        } else if (!_formKey.currentState.validate()) {
+//          return "Please Enter Details";
+//        } else {
+//          return null;
+//        }
 
-//        Navigator.push(
-//          context,
-//          MaterialPageRoute(builder: (context) => DashBoard()),
-//        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashBoard()),
+        );
       },
       child: Container(
         width: width * 0.25,
