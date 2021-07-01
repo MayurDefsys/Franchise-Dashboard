@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/model/connected_apps/connected_apps_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ConnectedApps extends StatefulWidget {
   @override
@@ -110,52 +111,62 @@ class _ConnectedAppsState extends State<ConnectedApps> {
         child: ListView.builder(
           itemCount: item.length,
           itemBuilder: (BuildContext context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    width: width * 1,
-                    height: height * 0.2,
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: NetworkImage(item[index].imageLink),
+            return GestureDetector(
+              onTap: () async {
+                var url = item[index].redirectUrl ?? "";
+                if (await canLaunch(url) != null)
+                  await launch(url);
+                else
+                  // can't launch url, there is some error
+                  throw "Could not launch $url";
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      width: width * 1,
+                      height: height * 0.2,
+                      margin: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: NetworkImage(item[index].imageLink),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 34.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item[index].name,
-                        style:
-                            TextStyle(color: Color.fromRGBO(89, 93, 110, 10)),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        item[index].description,
-                        style:
-                            TextStyle(color: Color.fromRGBO(100, 108, 154, 10)),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 34.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item[index].name,
+                          style:
+                              TextStyle(color: Color.fromRGBO(89, 93, 110, 10)),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          item[index].description,
+                          style: TextStyle(
+                              color: Color.fromRGBO(100, 108, 154, 10)),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Divider(
-                  color: Colors.red,
-                ),
-              ],
+                  Divider(
+                    color: Colors.red,
+                  ),
+                ],
+              ),
             );
           },
         ),
