@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:franchise_dashboard/screens/connected_apps/connected_apps_screen.dart';
 import 'package:franchise_dashboard/screens/graph/graph_screen.dart';
+import 'package:franchise_dashboard/screens/latest_document/latest_document_screen.dart';
 import 'package:franchise_dashboard/screens/news/latest_news_screen.dart';
 import 'package:franchise_dashboard/screens/social_wall/social_wall_screen.dart';
 import 'package:franchise_dashboard/widgets/drawer/custom_drawer.dart';
@@ -16,7 +17,7 @@ class _DashBoardState extends State<DashBoard> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: DefaultTabController(
-        length: 4,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -53,6 +54,12 @@ class _DashBoardState extends State<DashBoard> {
                   style: TextStyle(
 //                  color: Colors.blue
                       ),
+                ),
+                Text(
+                  "Latest Documents",
+                  style: TextStyle(
+//                  color: Colors.blue
+                  ),
                 ),
               ],
             ),
@@ -92,6 +99,7 @@ class _DashBoardState extends State<DashBoard> {
               SocialWall(),
               ConnectedApps(),
               GraphScreen(),
+              LatestDocument(),
             ],
           ),
         ),
