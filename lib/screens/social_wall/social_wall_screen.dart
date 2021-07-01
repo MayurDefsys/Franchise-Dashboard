@@ -15,7 +15,7 @@ class SocialWall extends StatefulWidget {
 class _SocialWallState extends State<SocialWall> {
   List<SocialWallModel> list;
 
-  Future<List<SocialWallModel>> fetchAlbum() async {
+  Future<List<SocialWallModel>> getSocialWall() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
     print("dfkndnfnnfngnfn $token");
@@ -81,11 +81,11 @@ class _SocialWallState extends State<SocialWall> {
             ),
           ),
           FutureBuilder<List<SocialWallModel>>(
-            future: fetchAlbum(),
+            future: getSocialWall(),
             builder: (context, snapShot) {
               if (snapShot.hasData) {
                 print("SnapshotData ${snapShot.hasData}");
-                return listDetailsWidget(snapShot.data);
+                return socialWallListWidget(snapShot.data);
               } else if (snapShot.hasError) {
                 print("SnapshotError ${snapShot.hasError}");
                 return Center(child: Text("Error"));
@@ -98,7 +98,7 @@ class _SocialWallState extends State<SocialWall> {
     );
   }
 
-  Widget listDetailsWidget(List<SocialWallModel> item) {
+  Widget socialWallListWidget(List<SocialWallModel> item) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(

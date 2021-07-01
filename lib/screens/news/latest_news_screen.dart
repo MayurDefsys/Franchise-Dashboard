@@ -15,7 +15,7 @@ class LatestNews extends StatefulWidget {
 class _LatestNewsState extends State<LatestNews> {
   List<NewsModel> list;
 
-  Future<List<NewsModel>> fetchAlbum() async {
+  Future<List<NewsModel>> getLatestNews() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
     print("dfkndnfnnfngnfn $token");
@@ -79,13 +79,13 @@ class _LatestNewsState extends State<LatestNews> {
               ],
             ),
           ),
-//          listDetailsWidget(),
+//          latestNewsListWidget(),
           FutureBuilder<List<NewsModel>>(
-            future: fetchAlbum(),
+            future: getLatestNews(),
             builder: (context, snapShot) {
               if (snapShot.hasData) {
                 print("SnapshotData ${snapShot.hasData}");
-                return listDetailsWidget(snapShot.data);
+                return latestNewsListWidget(snapShot.data);
               } else if (snapShot.hasError) {
                 print("SnapshotError ${snapShot.hasError}");
                 return Center(child: Text("Error"));
@@ -98,7 +98,7 @@ class _LatestNewsState extends State<LatestNews> {
     );
   }
 
-  Widget listDetailsWidget(List<NewsModel> item) {
+  Widget latestNewsListWidget(List<NewsModel> item) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(

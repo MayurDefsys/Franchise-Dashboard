@@ -14,7 +14,7 @@ class ConnectedApps extends StatefulWidget {
 class _ConnectedAppsState extends State<ConnectedApps> {
   List<ConnectedAppsModel> list;
 
-  Future<List<ConnectedAppsModel>> fetchAlbum() async {
+  Future<List<ConnectedAppsModel>> getConnectedApps() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString("token");
     print("dfkndnfnnfngnfn $token");
@@ -81,11 +81,11 @@ class _ConnectedAppsState extends State<ConnectedApps> {
             ),
           ),
           FutureBuilder<List<ConnectedAppsModel>>(
-            future: fetchAlbum(),
+            future: getConnectedApps(),
             builder: (context, snapShot) {
               if (snapShot.hasData) {
                 print("SnapshotData ${snapShot.hasData}");
-                return listDetailsWidget(snapShot.data);
+                return connectedAppsListWidget(snapShot.data);
               } else if (snapShot.hasError) {
                 print("SnapshotError ${snapShot.hasError}");
                 return Center(child: Text("Error"));
@@ -98,7 +98,7 @@ class _ConnectedAppsState extends State<ConnectedApps> {
     );
   }
 
-  Widget listDetailsWidget(List<ConnectedAppsModel> item) {
+  Widget connectedAppsListWidget(List<ConnectedAppsModel> item) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
