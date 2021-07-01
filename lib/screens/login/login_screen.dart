@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:franchise_dashboard/model/login/api_response.dart';
 import 'package:franchise_dashboard/model/login/login_model.dart';
 import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
@@ -60,12 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
       var responseJson = json.decode(response.body);
 
       prefs.setString("token", responseJson['data']['token']);
-
       print("Latest Token ${responseJson['data']['token']}");
       if (responseJson['data']['token'] != null) {
         setState(() {
           isLoading = false;
         });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Logged in successfully")));
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DashBoard()),
@@ -75,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = false;
       });
-      throw Exception('Failed to create album.');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("The username or password was not valid")));
     }
   }
 
@@ -276,8 +279,6 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading = true;
         });
         if (_formKey.currentState.validate()) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Processing')));
         } else if (!_formKey.currentState.validate()) {
           return "Please Enter Details";
         } else {
