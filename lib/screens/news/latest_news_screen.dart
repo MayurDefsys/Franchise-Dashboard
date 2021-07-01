@@ -25,13 +25,13 @@ class _LatestNewsState extends State<LatestNews> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer$token',
+        'Authorization': 'Bearer $token',
       },
     );
 
     print("responseListToken $token");
-    print("responseListData ${response.body}");
-    print("statusCodeList ${response.statusCode}");
+    print("latestNewsListBody ${response.body}");
+    print("statusCodeNewsList ${response.statusCode}");
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       print("dataaaa $data");
@@ -78,27 +78,26 @@ class _LatestNewsState extends State<LatestNews> {
               ],
             ),
           ),
-          listDetailsWidget(),
-//          FutureBuilder<List<NewsModel>>(
-//            future: fetchAlbum(),
-//            builder: (context, snapShot) {
-//              if (snapShot.hasData) {
-//                print("SnapshotData ${snapShot.hasData}");
-//                return listDetailsWidget(snapShot.data);
-//              } else if (snapShot.hasError) {
-//                print("SnapshotError ${snapShot.hasError}");
-//                return Center(child: Text("Error"));
-//              }
-//              return Center(child: CircularProgressIndicator());
-//            },
-//          ),
+//          listDetailsWidget(),
+          FutureBuilder<List<NewsModel>>(
+            future: fetchAlbum(),
+            builder: (context, snapShot) {
+              if (snapShot.hasData) {
+                print("SnapshotData ${snapShot.hasData}");
+                return listDetailsWidget(snapShot.data);
+              } else if (snapShot.hasError) {
+                print("SnapshotError ${snapShot.hasError}");
+                return Center(child: Text("Error"));
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget listDetailsWidget(//      List<NewsModel> item
-      ) {
+  Widget listDetailsWidget(List<NewsModel> item) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
@@ -109,7 +108,7 @@ class _LatestNewsState extends State<LatestNews> {
             color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.all(12.0),
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: item.length ,
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
               onTap: () {
@@ -143,7 +142,7 @@ class _LatestNewsState extends State<LatestNews> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "News Category ",
+                         item[index].title,
                           style:
                               TextStyle(color: Color.fromRGBO(89, 93, 110, 10)),
                         ),
@@ -151,7 +150,7 @@ class _LatestNewsState extends State<LatestNews> {
                           height: 10.0,
                         ),
                         Text(
-                          " Rashays Admin",
+                          item[index].author,
                           style: TextStyle(
                               color: Color.fromRGBO(100, 108, 154, 10)),
                         ),
@@ -167,7 +166,7 @@ class _LatestNewsState extends State<LatestNews> {
                           height: 10.0,
                         ),
                         Text(
-                          "If you’re looking to add a flavour twist to your already delicious RASHAYS meals, we have NEW Tabasco® sauces available on every table at our restaurants located across Sydney, ACT, Wollongong and the Central Coast!",
+                          item[index].description,
                           style: TextStyle(
                               color: Color.fromRGBO(116, 120, 141, 10)),
                         ),

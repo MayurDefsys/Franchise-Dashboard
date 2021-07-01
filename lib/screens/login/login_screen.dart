@@ -9,15 +9,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<LoginModel> login(String emailAddress, String password,
     bool isSuperAdmin, BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String tokenLogin = prefs.getString("token");
-  print("Before $tokenLogin");
 
   final response = await http.post(
     Uri.parse(
         'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      "Authorization": 'Bearer$tokenLogin',
+//      "Authorization": 'Bearer $tokenLogin',
     },
     body: jsonEncode(<String, dynamic>{
       'emailAddress': emailAddress,
@@ -27,7 +25,6 @@ Future<LoginModel> login(String emailAddress, String password,
   );
   print("response ${response.statusCode}");
   print("bodyyyyy ${response.body}");
-  print("setToken $tokenLogin");
 
   if (response.statusCode == 200) {
     var responseJson = json.decode(response.body);
@@ -36,10 +33,10 @@ Future<LoginModel> login(String emailAddress, String password,
 
     print("Latest Token ${responseJson['data']['token']}");
     if (responseJson['data']['token'] != null) {
-//      Navigator.push(
-//        context,
-//        MaterialPageRoute(builder: (context) => DashBoard()),
-//      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => DashBoard()),
+      );
     }
   } else {
     throw Exception('Failed to create album.');
@@ -78,7 +75,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  Future<LoginModel> _futureAlbum;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -259,22 +255,22 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () async {
-//        setState(() {
-//          login(emailController.text, passwordController.text, false, context);
-//        });
-//        if (_formKey.currentState.validate()) {
-//          ScaffoldMessenger.of(context)
-//              .showSnackBar(SnackBar(content: Text('Processing')));
-//        } else if (!_formKey.currentState.validate()) {
-//          return "Please Enter Details";
-//        } else {
-//          return null;
-//        }
+        setState(() {
+          login(emailController.text, passwordController.text, false, context);
+        });
+        if (_formKey.currentState.validate()) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Processing')));
+        } else if (!_formKey.currentState.validate()) {
+          return "Please Enter Details";
+        } else {
+          return null;
+        }
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DashBoard()),
-        );
+//        Navigator.push(
+//          context,
+//          MaterialPageRoute(builder: (context) => DashBoard()),
+//        );
       },
       child: Container(
         width: width * 0.25,
