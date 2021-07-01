@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/screens/admin/account_setting_screen.dart';
 import 'package:franchise_dashboard/screens/admin/system_log_screen.dart';
+import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:franchise_dashboard/screens/identity/identity_users.dart';
 import 'package:franchise_dashboard/screens/identity/user_groups.dart';
 import 'package:franchise_dashboard/screens/news/add_category_tag.dart';
@@ -49,6 +50,12 @@ class CustomDrawer extends StatelessWidget {
                   children: <Widget>[
                     new ListTile(
                       title: new Text('Dashboard'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DashBoard()),
+                        );
+                      },
                     ),
                     Theme(
                       data: Theme.of(context)
