@@ -6,43 +6,6 @@ import 'package:franchise_dashboard/screens/dash_board_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<LoginModel> login(String emailAddress, String password,
-    bool isSuperAdmin, BuildContext context) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  final response = await http.post(
-    Uri.parse(
-        'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-//      "Authorization": 'Bearer $tokenLogin',
-    },
-    body: jsonEncode(<String, dynamic>{
-      'emailAddress': emailAddress,
-      'password': password,
-      'isSuperAdmin': isSuperAdmin,
-    }),
-  );
-  print("response ${response.statusCode}");
-  print("bodyyyyy ${response.body}");
-
-  if (response.statusCode == 200) {
-    var responseJson = json.decode(response.body);
-
-    prefs.setString("token", responseJson['data']['token']);
-
-    print("Latest Token ${responseJson['data']['token']}");
-    if (responseJson['data']['token'] != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => DashBoard()),
-      );
-    }
-  } else {
-    throw Exception('Failed to create album.');
-  }
-}
-
 //dynamic _response(http.Response response, context) {
 //  switch (response.statusCode) {
 //    case 200:
@@ -73,10 +36,54 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<LoginModel> login(String emailAddress, String password,
+      bool isSuperAdmin, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final response = await http.post(
+      Uri.parse(
+          'https://franchisedashboard.azurewebsites.net/API/V1/Account/Login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+//      "Authorization": 'Bearer $tokenLogin',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'emailAddress': emailAddress,
+        'password': password,
+        'isSuperAdmin': isSuperAdmin,
+      }),
+    );
+    print("response ${response.statusCode}");
+    print("bodyyyyy ${response.body}");
+
+    if (response.statusCode == 200) {
+      var responseJson = json.decode(response.body);
+
+      prefs.setString("token", responseJson['data']['token']);
+
+      print("Latest Token ${responseJson['data']['token']}");
+      if (responseJson['data']['token'] != null) {
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashBoard()),
+        );
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      throw Exception('Failed to create album.');
+    }
+  }
+
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 _buildSignInButton(),
                               ],
-                            )
+                            ),
+                            _buildCircularProcessBar(),
                           ],
                         ),
                       ),
@@ -222,6 +230,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget _buildCircularProcessBar() {
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Container();
+  }
+
   Widget _buildHeadingText() {
     return Align(
       alignment: Alignment.topLeft,
@@ -257,6 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
       onTap: () async {
         setState(() {
           login(emailController.text, passwordController.text, false, context);
+          isLoading = true;
         });
         if (_formKey.currentState.validate()) {
           ScaffoldMessenger.of(context)
