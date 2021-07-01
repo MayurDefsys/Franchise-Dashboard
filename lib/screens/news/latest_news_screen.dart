@@ -5,6 +5,7 @@ import 'package:franchise_dashboard/model/news/news_model.dart';
 import 'package:franchise_dashboard/screens/news/news_category_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class LatestNews extends StatefulWidget {
   @override
@@ -108,8 +109,13 @@ class _LatestNewsState extends State<LatestNews> {
             color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
         margin: EdgeInsets.all(12.0),
         child: ListView.builder(
-          itemCount: item.length ,
+          itemCount: item.length,
           itemBuilder: (BuildContext context, index) {
+            DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .parse(item[index].date);
+            var inputDate = DateTime.parse(parseDate.toString());
+            var outputFormat = DateFormat('dd-MM-yyyy');
+            var outputDate = outputFormat.format(inputDate);
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -130,8 +136,7 @@ class _LatestNewsState extends State<LatestNews> {
                         borderRadius: BorderRadius.circular(5.0),
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image:
-                              NetworkImage("https://picsum.photos/250?image=9"),
+                          image: NetworkImage(item[index].newsImage),
                         ),
                       ),
                     ),
@@ -142,7 +147,7 @@ class _LatestNewsState extends State<LatestNews> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                         item[index].title,
+                          item[index].title,
                           style:
                               TextStyle(color: Color.fromRGBO(89, 93, 110, 10)),
                         ),
@@ -158,7 +163,7 @@ class _LatestNewsState extends State<LatestNews> {
                           height: 10.0,
                         ),
                         Text(
-                          "05-02-2021",
+                          outputDate,
                           style: TextStyle(
                               color: Color.fromRGBO(100, 108, 154, 10)),
                         ),
