@@ -14,6 +14,7 @@ dependencies:
   http: ^0.13.3
   shared_preferences: ^2.0.6
   intl: ^0.17.0
+  jiffy: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +26,7 @@ flutter:
   - assets/images/bg_image.png
   - assets/images/bg_login.png
   - assets/images/news.png
+  - assets/images/twitter.png
 
   uses-material-design: true
 
