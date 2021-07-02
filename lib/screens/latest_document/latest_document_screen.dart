@@ -174,7 +174,7 @@ class _LatestDocumentState extends State<LatestDocument> {
                       ),
                       Container(
                         padding: EdgeInsets.all(6.0),
-                        margin: EdgeInsets.all(2.0),
+                        margin: EdgeInsets.all(0.0),
                         decoration: BoxDecoration(
                             color: Color.fromRGBO(142, 141, 141, 10),
                             borderRadius: BorderRadius.circular(6.0)),
@@ -195,9 +195,8 @@ class _LatestDocumentState extends State<LatestDocument> {
                       Text(
                         outputDate,
                         style: TextStyle(
-                          color: Color.fromRGBO(128, 128, 128, 10),
-                          fontSize: 12.0,
-                        ),
+                            color: Color.fromRGBO(128, 128, 128, 10),
+                            fontSize: 12.0,),
                       ),
                     ],
                   ),
