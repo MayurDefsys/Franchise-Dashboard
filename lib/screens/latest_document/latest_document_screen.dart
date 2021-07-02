@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:franchise_dashboard/model/latest_document/latest_document_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:ext_storage/ext_storage.dart';
+
 
 class LatestDocument extends StatefulWidget {
   @override
@@ -100,6 +105,12 @@ class _LatestDocumentState extends State<LatestDocument> {
   }
 
   Widget latestDocumentListWidget(List<LatestDocumentModel> item) {
+
+    void showDownloadProgress(received, total) {
+      if (total != -1) {
+        print((received / total * 100).toStringAsFixed(0) + "%");
+      }
+    }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
@@ -112,6 +123,37 @@ class _LatestDocumentState extends State<LatestDocument> {
         child: ListView.builder(
           itemCount: item.length,
           itemBuilder: (BuildContext context, index) {
+
+            final url = item[index].url;
+            var dio = Dio();
+
+            String fullPath = "${ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS)}/newtask1.pdf";
+
+            Future download2(Dio dio, String url, String savePath) async {
+              try {
+                Response response = await dio.get(
+                  url,
+                  onReceiveProgress: showDownloadProgress,
+                  //Received data with List<int>
+                  options: Options(
+                      responseType: ResponseType.bytes,
+                      followRedirects: false,
+                      validateStatus: (status) {
+                        return status < 500;
+                      }),
+                );
+                print(response.headers);
+                File file = File(savePath);
+                var raf = file.openSync(mode: FileMode.write);
+                // response.data is List<int> type
+                raf.writeFromSync(response.data);
+                await raf.close();
+              } catch (e) {
+                print(e);
+              }
+            }
+
+
             DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                 .parse(item[index].updatedDate);
             var inputDate = DateTime.parse(parseDate.toString());
@@ -149,7 +191,13 @@ class _LatestDocumentState extends State<LatestDocument> {
                       iconSize: 40.0,
                       color: Color.fromRGBO(100, 108, 154, 10),
                       splashColor: Colors.purple,
-                      onPressed: () {},
+                      onPressed: () async {
+                        var tempDir = await getTemporaryDirectory();
+                        String fullPath = tempDir.path + "/boo2.pdf'";
+                        print('full path ${fullPath}');
+
+                        download2(dio, url, fullPath);
+                      },
                     ),
                   ),
                   SizedBox(
